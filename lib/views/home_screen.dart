@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snapwall/views/wallpaper_full_screen.dart';
 import 'package:snapwall/widgets/appbar_widget.dart';
+import 'package:snapwall/widgets/bottom_navigationbar_widget.dart';
 import 'package:snapwall/widgets/category_widget.dart';
 import 'package:snapwall/widgets/search_widget.dart';
 import 'package:snapwall/widgets/wallpaper_gridview_widget.dart';
@@ -16,13 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery.sizeOf(context);
-    return Scaffold(
-      appBar: const AppBarWidget(),
+    return const Scaffold(
+      appBar: AppBarWidget(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
-            const SearchWidget(),
+            SearchWidget(),
             CategoryWidget(),
             SizedBox(
               height: 10,
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBarWidget(),
     );
   }
 }
