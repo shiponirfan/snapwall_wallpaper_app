@@ -1,9 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:snapwall/api/api_endpoints.dart';
+import 'package:snapwall/model/category_media_model.dart';
+import 'package:snapwall/model/category_model.dart';
+import 'package:snapwall/utils/category_cover_image.dart';
 
-class CategoryWidget extends StatelessWidget {
+class CategoryWidget extends StatefulWidget {
   const CategoryWidget({
     super.key,
   });
+
+  @override
+  State<CategoryWidget> createState() => _CategoryWidgetState();
+}
+
+class _CategoryWidgetState extends State<CategoryWidget> {
+  List<CategoryModel> category = [];
+  List<CategoryMediaModel> categoryMedia = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getCategory();
+  }
+
+  void _getCategory() async {
+    List<CategoryModel> allCategory = await ApiEndpoints.getCollections();
+    setState(() {
+      category = allCategory;
+    });
+  }
+
+  void _getCategoryMedia(String categoryId) async {
+    List<CategoryMediaModel> allCategoryMedia =
+        await ApiEndpoints.getCollectionsMedia(categoryId);
+    setState(() {
+      categoryMedia = allCategoryMedia;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,22 +45,24 @@ class CategoryWidget extends StatelessWidget {
       width: mediaQuery.width,
       height: 60,
       child: ListView.builder(
-        itemCount: 6,
+        itemCount: category.length,
         scrollDirection: Axis.horizontal,
         semanticChildCount: 3,
         itemBuilder: (context, index) {
+          CategoryModel singleCategory = category[index];
+          List<String> categoryTitleSplit = singleCategory.title.split(' ');
+          List<String> categoryTitle = categoryTitleSplit.sublist(0, 1);
           return InkWell(
             onTap: () {},
             child: Container(
               width: 90,
               height: 60,
               margin: const EdgeInsets.only(top: 10, right: 10),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   color: Colors.blueAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   image: DecorationImage(
-                      image: NetworkImage(
-                          'https://images.pexels.com/photos/756808/pexels-photo-756808.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+                      image: NetworkImage(CategoryCoverImage.images[index]),
                       fit: BoxFit.cover)),
               child: Stack(children: [
                 Container(
@@ -36,12 +71,12 @@ class CategoryWidget extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                 ),
-                const Center(
+                Center(
                     child: Text(
-                  'Cat',
-                  style: TextStyle(
+                  categoryTitle[0],
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 )),
               ]),

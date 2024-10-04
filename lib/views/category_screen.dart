@@ -1,8 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:snapwall/views/main_navigation_screen.dart';
+import 'package:snapwall/api/api_endpoints.dart';
+import 'package:snapwall/model/category_media_model.dart';
+import 'package:snapwall/model/category_model.dart';
+import 'package:snapwall/utils/category_cover_image.dart';
 
-class CategoryScreen extends StatelessWidget {
+class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
+
+  @override
+  State<CategoryScreen> createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
+  List<CategoryModel> category = [];
+  List<CategoryMediaModel> categoryMedia = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getCategory();
+  }
+
+  void _getCategory() async {
+    List<CategoryModel> allCategory = await ApiEndpoints.getCollections();
+    setState(() {
+      category = allCategory;
+    });
+  }
+
+  void _getCategoryMedia(String categoryId) async {
+    List<CategoryMediaModel> allCategoryMedia =
+        await ApiEndpoints.getCollectionsMedia(categoryId);
+    setState(() {
+      categoryMedia = allCategoryMedia;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,23 +49,25 @@ class CategoryScreen extends StatelessWidget {
                   crossAxisCount: 1,
                   mainAxisSpacing: 10,
                   childAspectRatio: 2.2),
-              itemCount: 15,
+              itemCount: category.length,
               itemBuilder: (context, index) {
+                CategoryModel singleCategory = category[index];
                 return InkWell(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainNavigationScreen(),
-                        ));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const MainNavigationScreen(),
+                    //     ));
+                    _getCategoryMedia(singleCategory.id);
                   },
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         color: Colors.blueAccent,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
                         image: DecorationImage(
-                            image: NetworkImage(
-                                'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+                            image:
+                                NetworkImage(CategoryCoverImage.images[index]),
                             fit: BoxFit.cover)),
                     child: Stack(children: [
                       Container(
@@ -43,10 +77,10 @@ class CategoryScreen extends StatelessWidget {
                               const BorderRadius.all(Radius.circular(10)),
                         ),
                       ),
-                      const Center(
+                      Center(
                           child: Text(
-                        'Cat',
-                        style: TextStyle(
+                        singleCategory.title,
+                        style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
