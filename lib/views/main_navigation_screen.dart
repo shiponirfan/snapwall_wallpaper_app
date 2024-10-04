@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:snapwall/views/category_screen.dart';
-import 'package:snapwall/views/category_wallpaper_view_screen.dart';
 import 'package:snapwall/views/home_screen.dart';
 import 'package:snapwall/views/profile_screen.dart';
 import 'package:snapwall/widgets/appbar_widget.dart';
@@ -19,7 +18,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     HomeScreen(),
     CategoryScreen(),
     ProfileScreen(),
-    CategoryWallpaperViewScreen(),
   ];
 
   void _changedCurrentIndex(int changedIndex) {

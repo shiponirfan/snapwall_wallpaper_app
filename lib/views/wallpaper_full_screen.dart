@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WallpaperFullScreen extends StatelessWidget {
-  const WallpaperFullScreen({super.key});
+  const WallpaperFullScreen({super.key, required this.image});
+
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -10,11 +12,9 @@ class WallpaperFullScreen extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(
-                        'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-                    fit: BoxFit.cover)),
+                    image: NetworkImage(image), fit: BoxFit.cover)),
           ),
           Positioned(
             bottom: 40,

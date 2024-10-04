@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:snapwall/api/api_endpoints.dart';
+import 'package:snapwall/model/image_model.dart';
 import 'package:snapwall/widgets/category_widget.dart';
 import 'package:snapwall/widgets/search_widget.dart';
 import 'package:snapwall/widgets/wallpaper_gridview_widget.dart';
@@ -11,19 +13,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<ImageModel> images = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getAllImages();
+  }
+
+  void _getAllImages() async {
+    List<ImageModel> allImages = await ApiEndpoints.getAllImages();
+    setState(() {
+      images = allImages;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
-            SearchWidget(),
-            CategoryWidget(),
-            SizedBox(
+            const SearchWidget(),
+            const CategoryWidget(),
+            const SizedBox(
               height: 10,
             ),
-            WallpaperGridViewWidget()
+            WallpaperGridViewWidget(
+              images: images,
+            )
           ],
         ),
       ),
