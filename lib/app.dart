@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snapwall/views/home_screen.dart';
+import 'package:snapwall/views/main_navigation_screen.dart';
 
 class SnapWallApp extends StatelessWidget {
   const SnapWallApp({super.key});
@@ -9,7 +9,7 @@ class SnapWallApp extends StatelessWidget {
     return const MaterialApp(
       title: 'SnapWall',
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: MainNavigationScreen(),
     );
   }
 }
