@@ -9,6 +9,7 @@ class ApiEndpoints {
   static Uri collections =
       Uri.parse('${ApiConfig.baseApi}/collections/featured');
   static String collectionsMedia = '${ApiConfig.baseApi}/collections';
+  static String searchImages = '${ApiConfig.baseApi}/search?query=';
 
   static Future<List<ImageModel>> getAllImages() async {
     final response = await http.get(ApiEndpoints.allImages, headers: {
@@ -58,5 +59,20 @@ class ApiEndpoints {
     }
 
     return allCollectionsMedia;
+  }
+
+  static Future<List<ImageModel>> getSearchImages(String searchItem) async {
+    final response = await http.get(Uri.parse('${ApiEndpoints.searchImages}$searchItem'), headers: {
+      'Authorization': ApiConfig.pexelsApiHeader,
+    });
+
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+    List<ImageModel> allImages = [];
+    List photos = jsonData['photos'];
+    for (var images in photos) {
+      allImages.add(ImageModel.getImageFromApi(images));
+    }
+    return allImages;
   }
 }

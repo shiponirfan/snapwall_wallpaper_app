@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SearchWidget extends StatelessWidget {
+class SearchWidget extends StatefulWidget {
   const SearchWidget({
     super.key,
+    required this.searchTEController,
+    required this.onTap,
   });
 
+  final TextEditingController searchTEController;
+  final Function() onTap;
+
+  @override
+  State<SearchWidget> createState() => _SearchWidgetState();
+}
+
+class _SearchWidgetState extends State<SearchWidget> {
   @override
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery.sizeOf(context);
@@ -16,13 +26,14 @@ class SearchWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: TextField(
-              style: TextStyle(
+              controller: widget.searchTEController,
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 18,
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search Wallpaper',
                 hintStyle: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -33,7 +44,7 @@ class SearchWidget extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: widget.onTap,
             child: const Icon(Icons.search),
           ),
         ],
