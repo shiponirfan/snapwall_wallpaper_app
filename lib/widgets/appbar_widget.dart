@@ -20,6 +20,11 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               children: [
             TextSpan(style: TextStyle(color: Colors.blueAccent), text: 'Wall')
           ])),
+      actions: [
+        IconButton(onPressed: (){
+
+        }, icon: const Icon(Icons.refresh))
+      ],
     );
   }
 
