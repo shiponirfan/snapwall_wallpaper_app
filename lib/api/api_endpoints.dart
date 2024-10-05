@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:snapwall/model/category_media_model.dart';
 import 'package:snapwall/model/category_model.dart';
 import 'package:snapwall/model/image_model.dart';
 import 'package:snapwall/utils/api_config.dart';
@@ -43,19 +42,19 @@ class ApiEndpoints {
     return allCollections;
   }
 
-  static Future<List<CategoryMediaModel>> getCollectionsMedia(String categoryId) async {
+  static Future<List<ImageModel>> getCollectionsMedia(String categoryId) async {
     final response = await http.get(Uri.parse('$collectionsMedia/$categoryId'), headers: {
       'Authorization': ApiConfig.pexelsApiHeader,
     });
 
     Map<String, dynamic> jsonData = jsonDecode(response.body);
 
-    List<CategoryMediaModel> allCollectionsMedia = [];
+    List<ImageModel> allCollectionsMedia = [];
     List collectionsMediaList = jsonData['media'];
 
     for (var category in collectionsMediaList) {
       allCollectionsMedia
-          .add(CategoryMediaModel.getCategoryMediaFromApi(category));
+          .add(ImageModel.getImageFromApi(category));
     }
 
     return allCollectionsMedia;

@@ -9,4 +9,9 @@ class ImageModel {
         image: (images['src']['portrait']),
         photographer: images['photographer']);
   }
+  // static ImageModel getCategoryImageFromApi(Map<String, dynamic> images) {
+  //   return ImageModel(
+  //       image: (images['src']['portrait']),
+  //       photographer: images['photographer']);
+  // }
 }

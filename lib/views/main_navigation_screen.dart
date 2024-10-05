@@ -8,6 +8,7 @@ import 'package:snapwall/widgets/navigation_widget.dart';
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
 
+
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
@@ -15,9 +16,9 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int index = 0;
   List<Widget> views = [
-    HomeScreen(),
-    CategoryScreen(),
-    ProfileScreen(),
+    const HomeScreen(),
+    const CategoryScreen(),
+    const ProfileScreen(),
   ];
 
   void _changedCurrentIndex(int changedIndex) {
@@ -29,7 +30,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
+      appBar: const AppBarWidget(),
       bottomNavigationBar: NavigationWidget(
         currentIndex: index,
         changedCurrentIndex: _changedCurrentIndex,

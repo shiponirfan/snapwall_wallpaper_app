@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:snapwall/api/api_endpoints.dart';
 import 'package:snapwall/model/image_model.dart';
+import 'package:snapwall/widgets/appbar_widget.dart';
 import 'package:snapwall/widgets/category_widget.dart';
+import 'package:snapwall/widgets/navigation_widget.dart';
 import 'package:snapwall/widgets/search_widget.dart';
 import 'package:snapwall/widgets/wallpaper_gridview_widget.dart';
 
